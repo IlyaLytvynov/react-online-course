@@ -1,0 +1,20 @@
+$background-color: #fff;
+
+.infoBox {
+  background: $background-color;
+  width: 400px;
+  margin: 0 auto;
+  border: 1px solid red;
+  height: 450px;
+  position: relative;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+}
+
+.slides {
+  position: relative;
+  height: 380px;
+}
