@@ -2,8 +2,17 @@ import React from "react";
 import styles from "./Slide.module.scss";
 
 export class Slide extends React.Component {
+  constructor() {
+    super();
+    console.log("CONSTRUCTOR");
+  }
+
+  componentDidMount() {
+    console.log("DID MOUNT!");
+  }
+
   render() {
-    console.log(this.props);
+    console.log("RENDER", this.props);
     const { isActive, img, title, description, onButtonClick } = this.props;
     return (
       <div className={`${styles.slide} ${isActive ? styles.active : ""}`}>
