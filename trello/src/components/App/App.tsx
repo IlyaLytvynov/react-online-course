@@ -1,7 +1,13 @@
 import * as React from 'react';
+import { Route, Link, RouteComponentProps, Redirect, Switch, RouteChildrenProps } from 'react-router-dom';
 import { setToLocalStorage, getFromLocalStorage } from '../../utils';
+import { Dashboard } from '../Dashboard';
+import { Login } from '../Login/Login';
+import { routes, AppRoute } from './routes';
+import { OAuth } from '../OAuth';
 
-const { REACT_APP_API_KEY, REACT_APP_APP_NAME, REACT_APP_REDIRECT_URL, REACT_APP_SCOPE } = process.env
+
+
 const TOKEN_STRORAGE_KEY = 'TOKEN';
 
 interface Board {
@@ -22,18 +28,8 @@ export class App extends React.Component<any, AppState> {
     boards: []
   }
 
-  private async setToken(token: string) {
+  private setToken = (token: string) => {
     this.setState({ token });
-    await setToLocalStorage(TOKEN_STRORAGE_KEY, token);
-  }
-
-  private async getToken() {
-    const token = await getFromLocalStorage(TOKEN_STRORAGE_KEY);
-    return token;
-  }
-
-  private getTokenFromUrl() {
-    return window.location.hash.split('=')[1];
   }
 
   private isLoggedIn() {
@@ -41,25 +37,23 @@ export class App extends React.Component<any, AppState> {
   }
 
   private renderHeader() {
-    const requestUrl = `https://trello.com/1/authorize?return_url=${REACT_APP_REDIRECT_URL}&expiration=1day&name=${REACT_APP_APP_NAME}&scope=${REACT_APP_SCOPE}&response_type=token&key=${REACT_APP_API_KEY}`;
-
     return <header>
-      {
-        this.isLoggedIn() ? 'Hello user' : <a href={requestUrl}>Login with trello account</a>
-      }
+      {routes.map((route: AppRoute, i: number) => route.isHidden ? null : <Link key={i} to={route.path}>{route.title}</Link>)}
     </header>
   }
 
   private renderContent() {
     return <main>
-      {this.isLoggedIn() ? <h2>Some secret content</h2> : 'Please log in!'}
+      <Switch>
+        {routes.map((route: any, i: number) => <Route
+          exact={route.exact}
+          key={i} path={route.path}
+          render={(props) => route.render({ ...props })} />
+        )}
+        <Route path="/oauth" render={(props: RouteChildrenProps) => <OAuth {...props} onSetToken={this.setToken} />} />
+        <Redirect to="/404" />
+      </Switch>
     </main>
-  }
-
-  public componentDidMount() {
-    // const savedToken = await this.getToken();
-    const newToken = this.getTokenFromUrl();
-    this.setToken(newToken);
   }
 
   public render() {
