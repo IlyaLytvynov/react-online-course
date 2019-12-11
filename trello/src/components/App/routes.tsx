@@ -3,35 +3,44 @@ import { Redirect, RouteChildrenProps } from 'react-router-dom';
 import { Login } from "../Login";
 import { Dashboard } from "../Dashboard";
 import { NotFound } from '../NotFound';
-import { OAuth } from '../OAuth/OAuth';
+
+export enum ROUTES_URLS {
+  HOME = '/',
+  LOGIN = '/signin',
+  DASHBOARD = '/hello-world',
+  OAUTH = '/oauth',
+  NOT_FOUND = '/404'
+}
 
 export interface AppRoute {
-  path: string,
+  path: ROUTES_URLS,
   render: (props: any) => any,
   title?: string,
   isHidden?: boolean,
-  exact?: boolean
+  exact?: boolean,
+  isProtected?: boolean
 }
 
 export const routes: Array<AppRoute> = [
   {
-    path: '/login',
+    path: ROUTES_URLS.HOME,
     render: (props: any) => <Login {...props} />,
     title: 'Login'
   },
   {
-    path: '/dashboard',
+    path: ROUTES_URLS.DASHBOARD,
     title: 'Dashboard',
+    isProtected: true,
     render: (props: RouteChildrenProps) => <Dashboard {...props} />,
   },
   {
-    path: '/',
+    path: ROUTES_URLS.HOME,
     isHidden: true,
     exact: true,
-    render: () => <Redirect to="/login" />,
+    render: () => <Redirect to={ROUTES_URLS.LOGIN} />,
   },
   {
-    path: '/404',
+    path: ROUTES_URLS.NOT_FOUND,
     isHidden: true,
     render: (props: RouteChildrenProps) => <NotFound {...props} />,
   },
