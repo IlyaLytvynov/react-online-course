@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Route, Redirect, RouteProps, RouteComponentProps } from 'react-router-dom';
+import { ROUTES_URLS } from "../App/routes";
 
 interface ProtectedRouteProps extends RouteProps {
   isAuthenticated: boolean;
@@ -16,7 +17,7 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = ({ isAuthenticate
           ) : (
               <Redirect
                 to={{
-                  pathname: "/login",
+                  pathname: ROUTES_URLS.LOGIN,
                   state: { from: routeCompProps.location }
                 }}
               />
@@ -24,6 +25,6 @@ const ProtectedRoute: FunctionComponent<ProtectedRouteProps> = ({ isAuthenticate
       }
     />
   );
-}
+};
 
 export { ProtectedRoute };

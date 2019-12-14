@@ -7,7 +7,7 @@ import { NotFound } from '../NotFound';
 export enum ROUTES_URLS {
   HOME = '/',
   LOGIN = '/signin',
-  DASHBOARD = '/hello-world',
+  DASHBOARD = '/dashboard',
   OAUTH = '/oauth',
   NOT_FOUND = '/404'
 }
@@ -18,12 +18,12 @@ export interface AppRoute {
   title?: string,
   isHidden?: boolean,
   exact?: boolean,
-  isProtected?: boolean
+  isProtected?: boolean;
 }
 
 export const routes: Array<AppRoute> = [
   {
-    path: ROUTES_URLS.HOME,
+    path: ROUTES_URLS.LOGIN,
     render: (props: any) => <Login {...props} />,
     title: 'Login'
   },
@@ -44,4 +44,4 @@ export const routes: Array<AppRoute> = [
     isHidden: true,
     render: (props: RouteChildrenProps) => <NotFound {...props} />,
   },
-]
+];

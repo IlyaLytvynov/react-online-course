@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.content {
+  @include content;
+  width: 100%;
+  min-height: 'calc(100vh - #{$header-height})';
+}

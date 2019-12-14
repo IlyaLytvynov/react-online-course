@@ -1,0 +1,16 @@
+@import '../../styles/_variables';
+@import '../../styles/mixins';
+
+.header {
+  background: $main-color;
+  height: $header-height;
+  display: flex;
+  box-shadow: $container-shadow;
+}
+
+.content {
+  @include content;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

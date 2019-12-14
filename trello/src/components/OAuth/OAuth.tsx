@@ -8,7 +8,7 @@ interface OAuthProps extends RouteChildrenProps {
 
 export const OAuth: FunctionComponent<OAuthProps> = ({ location: { hash }, onSetToken }: OAuthProps) => {
   const token = hash.split('=')[1];
-  debugger;
+  console.log(token);
   onSetToken(token);
-  return <Redirect to={ROUTES_URLS.DASHBOARD} />
-}
+  return <Redirect to={ROUTES_URLS.DASHBOARD} />;
+};
