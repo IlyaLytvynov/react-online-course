@@ -44,26 +44,26 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   private async getToken() {
-    if (this.state.token) {
-      return;
-    }
+    // if (this.state.token) {
+    //   return;
+    // }
 
-    const token = getFromLocalStorage(TOKEN_STRORAGE_KEY);
-    if (!token) {
-      return this.navigateToLogin();
-    }
+    // const token = getFromLocalStorage(TOKEN_STRORAGE_KEY);
+    // if (!token) {
+    //   return this.navigateToLogin();
+    // }
 
-    const url = `https://api.trello.com/1/members/me?key=${REACT_APP_API_KEY}&token=${token}`;
-    const response = await fetch(url);
+    // const url = `https://api.trello.com/1/members/me?key=${REACT_APP_API_KEY}&token=${token}`;
+    // const response = await fetch(url);
 
-    if (response.ok === true && response.status === 200) {
-      const userProfile = await response.json();
-      this.setProfile(userProfile);
-      this.setToken(token);
-      return this.navigateToDashboard();
-    }
+    // if (response.ok === true && response.status === 200) {
+    //   const userProfile = await response.json();
+    //   this.setProfile(userProfile);
 
-    return this.navigateToLogin();
+    //   return this.navigateToDashboard();
+    // }
+
+    // return this.navigateToLogin();
   }
 
   private navigateToDashboard() {
@@ -78,25 +78,16 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({ userProfile });
   }
 
-  private setToken = (token: string) => {
-    this.setState({ token });
-    setToLocalStorage(TOKEN_STRORAGE_KEY, token);
-  };
-
   private get isLoggedIn() {
     return !!this.state.token;
   }
 
-  private logOut = () => {
-    this.setState(INITIAL_STATE);
-    this.navigateToLogin();
-  };
 
   private renderContent() {
     return <main className={styles.content}>
       <Switch>
         {routes.map(this.renderRoute)}
-        <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} onSetToken={this.setToken} />} />
+        <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} />} />
       </Switch>
     </main>;
   }
@@ -108,8 +99,7 @@ class App extends React.Component<AppProps, AppState> {
         exact={route.exact}
         key={i}
         path={route.path}
-        render={route.render}
-        isAuthenticated={this.isLoggedIn} />;
+        render={route.render} />;
     } else {
       return <Route
         exact={route.exact}
@@ -121,7 +111,7 @@ class App extends React.Component<AppProps, AppState> {
 
   public render() {
     return <div>
-      <Header onLogOut={this.logOut} />
+      <Header onLogOut={() => console.log('asdas')} />
       {this.renderContent()}
     </div>;
   }
