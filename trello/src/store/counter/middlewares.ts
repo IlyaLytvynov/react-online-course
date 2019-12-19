@@ -9,6 +9,7 @@ const asyncTimeout = async (fn: any, ms: number = 1000) => {
 
 export const asyncIncrease: Middleware = () => (next: any) => {
   return async (action: any) => {
+    console.log('COUNTER:', action);
     if (action.type === ACTION_TYPES.INCREASE_COUNT) {
       await asyncTimeout(() => {
         console.log('hello');

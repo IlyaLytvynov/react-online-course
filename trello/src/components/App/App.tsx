@@ -7,6 +7,8 @@ import { ProtectedRoute } from '../ProtectedRoute';
 
 import styles from './App.module.scss';
 import { Header } from '../Header';
+import { init } from '../../store/initialization';
+import { connect } from 'react-redux';
 
 const TOKEN_STRORAGE_KEY = 'TOKEN';
 const { REACT_APP_API_KEY } = process.env;
@@ -24,7 +26,9 @@ interface AppState {
   userProfile: any;
 }
 
-interface AppProps extends RouteComponentProps { }
+interface AppProps extends RouteComponentProps {
+  onInit: () => void;
+}
 
 const INITIAL_STATE = {
   token: '',
@@ -38,51 +42,9 @@ interface CustomToken {
 
 class App extends React.Component<AppProps, AppState> {
   public state = INITIAL_STATE;
-
-  componentDidMount() {
-    this.getToken();
+  componentWillMount() {
+    this.props.onInit();
   }
-
-  private async getToken() {
-    // if (this.state.token) {
-    //   return;
-    // }
-
-    // const token = getFromLocalStorage(TOKEN_STRORAGE_KEY);
-    // if (!token) {
-    //   return this.navigateToLogin();
-    // }
-
-    // const url = `https://api.trello.com/1/members/me?key=${REACT_APP_API_KEY}&token=${token}`;
-    // const response = await fetch(url);
-
-    // if (response.ok === true && response.status === 200) {
-    //   const userProfile = await response.json();
-    //   this.setProfile(userProfile);
-
-    //   return this.navigateToDashboard();
-    // }
-
-    // return this.navigateToLogin();
-  }
-
-  private navigateToDashboard() {
-    this.props.history.push(ROUTES_URLS.DASHBOARD);
-  }
-
-  private navigateToLogin() {
-    this.props.history.push(ROUTES_URLS.LOGIN);
-  }
-
-  private setProfile(userProfile: any) {
-    this.setState({ userProfile });
-  }
-
-  private get isLoggedIn() {
-    return !!this.state.token;
-  }
-
-
   private renderContent() {
     return <main className={styles.content}>
       <Switch>
@@ -93,7 +55,6 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   private renderRoute = (route: AppRoute, i: number) => {
-    console.log(route);
     if (route.isProtected) {
       return <ProtectedRoute
         exact={route.exact}
@@ -117,6 +78,12 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-const AppWithRouter = withRouter(App);
+const mapDispathToProps = (dispatch: any) => {
+  return {
+    onInit: () => dispatch(init())
+  };
+};
+
+const AppWithRouter = withRouter(connect(undefined, mapDispathToProps)(App));
 
 export { AppWithRouter as App };
