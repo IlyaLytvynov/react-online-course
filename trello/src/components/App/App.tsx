@@ -26,9 +26,7 @@ interface AppState {
   userProfile: any;
 }
 
-interface AppProps extends RouteComponentProps {
-  onInit: () => void;
-}
+interface AppProps { }
 
 const INITIAL_STATE = {
   token: '',
@@ -36,15 +34,9 @@ const INITIAL_STATE = {
   boards: []
 };
 
-interface CustomToken {
-  token: string, expireIn: number;
-}
-
 class App extends React.Component<AppProps, AppState> {
   public state = INITIAL_STATE;
-  componentWillMount() {
-    this.props.onInit();
-  }
+
   private renderContent() {
     return <main className={styles.content}>
       <Switch>
@@ -78,12 +70,4 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-const mapDispathToProps = (dispatch: any) => {
-  return {
-    onInit: () => dispatch(init())
-  };
-};
-
-const AppWithRouter = withRouter(connect(undefined, mapDispathToProps)(App));
-
-export { AppWithRouter as App };
+export { App };

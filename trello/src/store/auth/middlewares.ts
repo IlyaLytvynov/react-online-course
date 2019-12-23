@@ -3,26 +3,14 @@ import { ACTION_TYPES } from './types';
 import { setToLocalStorage, subscribe, getFromLocalStorage } from '../../utils';
 import { setToken } from './actions';
 
+import { ROUTES_URLS } from '../../components/App/routes';
+import { navigate } from '../router';
+
 const APP_TOKEN = 'TREELLO_CUSTOM_APP_TOKEN';
 
-const authMiddleware = ({ dispatch }: any) => (next: any) => (
-  action: Action<ACTION_TYPES>
-) => {
-  if (action.type === ACTION_TYPES.SET_TOKEN) {
-    console.log('TOKEN SET!');
-    setToLocalStorage(APP_TOKEN, action.payload);
-    // setTimeout(() => {
-    //   dispatch(
-    //     request({
-    //       path:
-    //         'https://my-json-server.typicode.com/ilyalytvynov/ads-box-server/movies',
-    //       onSuccess: (data: any) => {
-    //         console.log('SUCCESS', data);
-    //       }
-    //     })
-    //   );
-    // });
-  }
+const setTokenWorker = ({ action, next, dispatch }: any) => {
+  setToLocalStorage(APP_TOKEN, action.payload);
+  dispatch(navigate(ROUTES_URLS.DASHBOARD));
   next(action);
 };
 
@@ -37,4 +25,7 @@ const readTokenWorker = ({ action, next, dispatch }: any) => {
 const readTokenMiddleware = ({ dispatch }: any) => (next: any) =>
   subscribe(ACTION_TYPES.READ_TOKEN, readTokenWorker)(next, dispatch);
 
-export const authMiddlewares = [authMiddleware, readTokenMiddleware];
+const setTokenMiddleware = ({ dispatch }: any) => (next: any) =>
+  subscribe(ACTION_TYPES.SET_TOKEN, setTokenWorker)(next, dispatch);
+
+export const authMiddlewares = [setTokenMiddleware, readTokenMiddleware];

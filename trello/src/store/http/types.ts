@@ -2,6 +2,7 @@ import { Action } from '../types';
 
 export interface RequestPayload<P = any> {
   path: string;
+  authRequired?: boolean;
   onSuccess?: (p?: P) => void;
   onError?: (e?: any) => void;
 }
