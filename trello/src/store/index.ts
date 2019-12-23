@@ -6,6 +6,7 @@ import http, { httpMiddlewares, HTTPState } from './http';
 import { initMiddleware } from './initialization';
 import connectRouter from './router';
 import boards, { boardsMiddleware } from './boards';
+import thunk from 'redux-thunk';
 
 export interface AppState {
   counter: CounterState;
@@ -34,6 +35,7 @@ export default function configureStore(history: History) {
     undefined,
     composeEnhancers(
       applyMiddleware(
+        thunk,
         ...authMiddlewares,
         ...httpMiddlewares,
         ...initMiddleware,

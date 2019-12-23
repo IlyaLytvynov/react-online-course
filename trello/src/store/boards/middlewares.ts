@@ -16,19 +16,20 @@ const fetchBoardsWorker: any = ({
 }) => {
   console.log('FETCHED');
 
-  dispatch(
-    request({
-      path: '/1/members/me/boards',
-      authRequired: true,
-      onSuccess: data => {
-        console.log(data);
-        dispatch(setBoards(data));
-      },
-      onError: error => {
-        console.log(error);
-      }
-    })
-  );
+  // dispatch(
+  //   request({
+  //     path: '/1/members/me/boards',
+  //     authRequired: true,
+  //     onSuccess: data => {
+  //       console.log(data);
+  //       dispatch(setBoards(data));
+  //     },
+  //     onError: error => {
+  //       console.log(error);
+  //     }
+  //   })
+  // );
+  next(action);
 };
 
 const fetchMiddleware = ({ dispatch }: any) => (next: any) =>
