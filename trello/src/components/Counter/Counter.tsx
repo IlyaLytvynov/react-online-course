@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { MyCoolStore } from "../../observables/MyCoolStore";
+import { MyCoolStore } from "../../observableStores/MyCoolStore";
 
 
 interface Props {

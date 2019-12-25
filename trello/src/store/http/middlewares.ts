@@ -3,16 +3,7 @@ import uuid from 'uuid/v4';
 import { ACTION_TYPES } from './types';
 import { Worker, subscribe } from '../../utils';
 import { getToken } from '../auth';
-const { REACT_APP_API_DOMAIN, REACT_APP_API_KEY } = process.env;
-
-const makeUrl = (path: string, authRequired: boolean, token: string) => {
-  let url = REACT_APP_API_DOMAIN + path + `?key=${REACT_APP_API_KEY}`;
-  if (authRequired && token) {
-    url = url + `&token=${token}`;
-  }
-
-  return url;
-};
+import { makeUrl } from '../../utils/makeUrl';
 
 const requestWorker: Worker<any> = async ({ action, next, getState }) => {
   const requestId = uuid();

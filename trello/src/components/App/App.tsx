@@ -1,32 +1,24 @@
 import * as React from 'react';
-import { Route, RouteComponentProps, Redirect, Switch, RouteChildrenProps, withRouter } from 'react-router-dom';
-import { setToLocalStorage, getFromLocalStorage } from '../../utils';
+import { Route, Switch, RouteChildrenProps } from 'react-router-dom';
 import { routes, AppRoute, ROUTES_URLS } from './routes';
 import { OAuth } from '../OAuth';
 import { ProtectedRoute } from '../ProtectedRoute';
 
 import styles from './App.module.scss';
 import { Header } from '../Header';
-import { init } from '../../store/initialization';
-import { connect } from 'react-redux';
+import { inject, observer } from 'mobx-react';
+import { STORE_IDS } from '../../observableStores';
+import { UiStore } from '../../observableStores/UiStire';
+import { Notifications } from '../Notifications';
 
-const TOKEN_STRORAGE_KEY = 'TOKEN';
-const { REACT_APP_API_KEY } = process.env;
 
-interface Board {
-  id: string;
-  name: string;
-  pinned: boolean;
-  desc?: string;
-}
 
 interface AppState {
-  token: string;
-  boards: Array<Board>;
-  userProfile: any;
 }
 
-interface AppProps { }
+interface AppProps {
+  [STORE_IDS.UI]?: UiStore;
+}
 
 const INITIAL_STATE = {
   token: '',
@@ -34,11 +26,15 @@ const INITIAL_STATE = {
   boards: []
 };
 
+@inject(STORE_IDS.UI)
+@observer
 class App extends React.Component<AppProps, AppState> {
   public state = INITIAL_STATE;
 
   private renderContent() {
+    const store = this.props[STORE_IDS.UI];
     return <main className={styles.content}>
+      {store!.screen.w}
       <Switch>
         {routes.map(this.renderRoute)}
         <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} />} />
@@ -65,6 +61,7 @@ class App extends React.Component<AppProps, AppState> {
   public render() {
     return <div>
       <Header onLogOut={() => console.log('asdas')} />
+      <Notifications />
       {this.renderContent()}
     </div>;
   }

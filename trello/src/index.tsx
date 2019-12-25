@@ -8,21 +8,21 @@ import { Provider } from 'mobx-react';
 import './index.scss';
 import configureStore from './store';
 import { init } from './store/initialization';
-import { observable, runInAction } from 'mobx';
-import { MyCoolStore } from './observables/MyCoolStore';
+import { stores } from './observableStores';
 
 const history = createBrowserHistory();
 const store = configureStore(history);
 store.dispatch(init());
 
-const mobxStore = new MyCoolStore();
-
-setInterval(() => mobxStore.increase(), 1000);
+// const mobxStore = new MyCoolStore();
+// // @ts-ignore
+// window.t = mobxStore;
+// setInterval(() => mobxStore.increase(), 1000);
 
 ReactDOM.render(
   <ReduxProvider store={store}>
     <ConnectedRouter history={history}>
-      <Provider myCoolStore={mobxStore}>
+      <Provider {...stores}>
         <App />
       </Provider>
     </ConnectedRouter>

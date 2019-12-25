@@ -1,0 +1,1 @@
+export const APP_TOKEN = 'TREELLO_CUSTOM_APP_TOKEN';

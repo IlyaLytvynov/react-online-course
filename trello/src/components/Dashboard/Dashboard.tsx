@@ -3,61 +3,44 @@ import { RouteChildrenProps } from 'react-router';
 import { connect } from 'react-redux';
 import { increaseCount, decreaseCount, AppState, getCount } from '../../store';
 import { fetchBoards, getBoards } from '../../store/boards';
+import { inject, observer } from 'mobx-react';
+import { STORE_IDS } from '../../observableStores';
+import { observable } from 'mobx';
+import { BoardsStore } from '../../observableStores/Boards';
 
 interface DashboardProps extends RouteChildrenProps {
-  hello?: string;
-  token?: string;
-  myCount?: number;
-  boards?: Array<any>;
-  onIncrease?: () => void;
-  onDecrease?: () => void;
-  onFetchBoards?: () => void;
+  [STORE_IDS.BOARDS]?: BoardsStore;
 }
 
+@inject(STORE_IDS.BOARDS)
+@observer
 class Dashboard extends React.Component<DashboardProps> {
 
   goBack = () => {
     this.props.history.goBack();
   };
 
-  increase = () => {
-    this.props.onIncrease && this.props.onIncrease();
-  };
+  public componentDidMount() {
+    this.props[STORE_IDS.BOARDS]!.fetchBoards();
+  }
 
-  decrease = () => {
-    this.props.onDecrease && this.props.onDecrease();
-  };
+  private get store() {
+    return this.props[STORE_IDS.BOARDS];
+  }
 
-  componentDidMount() {
-    this.props.onFetchBoards!();
+  renderBoards() {
+    return this.store!.list.map((item: any) => {
+      return <div>{item.name}</div>;
+    });
   }
 
   render() {
     return <div>
       <h2 onClick={this.goBack}>Hello from dashboard</h2>
-      <div>{this.props.myCount}</div>
-      <button onClick={this.decrease}>-</button>
-      <button onClick={this.increase}>+</button>
-      {this.props.boards!.map((item) => <div>{item.name}</div>)}
+      {this.renderBoards()}
     </div>;
   }
 }
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    myCount: getCount(state),
-    boards: getBoards(state)
-  };
-};
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    onIncrease: () => dispatch(increaseCount()),
-    onDecrease: () => dispatch(decreaseCount()),
-    onFetchBoards: () => dispatch(fetchBoards())
-  };
-};
-
-const ConnectedDashboard = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-
-export { ConnectedDashboard as Dashboard };
+export { Dashboard };
