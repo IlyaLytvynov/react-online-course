@@ -8,3 +8,7 @@ export const setToken = (token: string) => ({
 export const readToken = () => ({
   type: ACTION_TYPES.READ_TOKEN
 });
+
+export const logOut = () => ({
+  type: ACTION_TYPES.LOGOUT
+});

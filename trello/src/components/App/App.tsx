@@ -34,7 +34,6 @@ class App extends React.Component<AppProps, AppState> {
   private renderContent() {
     const store = this.props[STORE_IDS.UI];
     return <main className={styles.content}>
-      {store!.screen.w}
       <Switch>
         {routes.map(this.renderRoute)}
         <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} />} />
@@ -60,7 +59,7 @@ class App extends React.Component<AppProps, AppState> {
 
   public render() {
     return <div>
-      <Header onLogOut={() => console.log('asdas')} />
+      <Header />
       <Notifications />
       {this.renderContent()}
     </div>;

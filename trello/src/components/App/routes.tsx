@@ -3,13 +3,14 @@ import { Redirect, RouteChildrenProps } from 'react-router-dom';
 import { Login } from "../Login";
 import { Dashboard } from "../Dashboard";
 import { NotFound } from '../NotFound';
+import { Board } from '../Board';
 
 export enum ROUTES_URLS {
   HOME = '/',
   LOGIN = '/signin',
   DASHBOARD = '/dashboard',
   OAUTH = '/oauth',
-  NOT_FOUND = '/404'
+  NOT_FOUND = '/404',
 }
 
 export interface AppRoute {
@@ -26,6 +27,12 @@ export const routes: Array<AppRoute> = [
     path: ROUTES_URLS.LOGIN,
     render: (props: any) => <Login {...props} />,
     title: 'Login'
+  },
+  {
+    path: ROUTES_URLS.DASHBOARD + '/:id' as any,
+    isProtected: true,
+    isHidden: true,
+    render: (props: RouteChildrenProps) => <Board {...props} />,
   },
   {
     path: ROUTES_URLS.DASHBOARD,

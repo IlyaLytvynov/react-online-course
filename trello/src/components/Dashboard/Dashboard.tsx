@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { RouteChildrenProps } from 'react-router';
-import { connect } from 'react-redux';
-import { increaseCount, decreaseCount, AppState, getCount } from '../../store';
-import { fetchBoards, getBoards } from '../../store/boards';
 import { inject, observer } from 'mobx-react';
 import { STORE_IDS } from '../../observableStores';
-import { observable } from 'mobx';
 import { BoardsStore } from '../../observableStores/Boards';
+import styles from './Dashboard.module.scss';
+import { Board } from './Board';
 
 interface DashboardProps extends RouteChildrenProps {
   [STORE_IDS.BOARDS]?: BoardsStore;
@@ -30,13 +28,12 @@ class Dashboard extends React.Component<DashboardProps> {
 
   renderBoards() {
     return this.store!.list.map((item: any) => {
-      return <div>{item.name}</div>;
+      return <Board name={item.name} id={item.id} />;
     });
   }
 
   render() {
-    return <div>
-      <h2 onClick={this.goBack}>Hello from dashboard</h2>
+    return <div className={styles.container}>
       {this.renderBoards()}
     </div>;
   }
