@@ -1,2 +1,18 @@
+@import '../../styles/_variables';
+@import '../../styles/mixins';
+
 .container {
+  overflow-x: scroll;
+  min-height: calc(100vh - #{$header-height});
+}
+
+.list {
+  display: flex;
+  min-width: 100%;
+  > * {
+    min-width: 150px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    min-height: 150px;
+  }
 }

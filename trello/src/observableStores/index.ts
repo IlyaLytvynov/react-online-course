@@ -6,6 +6,8 @@ import { CardsStore } from './Cards';
 import { NotificationsStore } from './Notifications';
 import { BoardsApi } from '../apis/BoardsApi';
 import { CardsApi } from '../apis/CardsApi';
+import { ListsApi } from '../apis/ListsApi';
+import { ListsStore } from './Lists';
 
 export enum STORE_IDS {
   UI = 'ui',
@@ -13,12 +15,14 @@ export enum STORE_IDS {
   AUTH = 'auth',
   BOARDS = 'boards',
   NOTIFICATION = 'notifications',
-  CARDS = 'cards'
+  CARDS = 'cards',
+  LISTS = 'lists'
 }
 
 const apis = {
   [STORE_IDS.BOARDS]: new BoardsApi(),
-  [STORE_IDS.CARDS]: new CardsApi()
+  [STORE_IDS.CARDS]: new CardsApi(),
+  [STORE_IDS.LISTS]: new ListsApi()
 };
 
 const auth = new AuthStore();
@@ -34,7 +38,8 @@ const stores = {
     auth,
     apis[STORE_IDS.BOARDS],
     notifications
-  )
+  ),
+  [STORE_IDS.LISTS]: new ListsStore(auth, apis[STORE_IDS.LISTS], notifications)
 };
 
 export { stores };

@@ -1,9 +1,9 @@
-import { observable, computed, toJS } from 'mobx';
+import { observable, computed, toJS, reaction } from 'mobx';
 import { AuthStore } from './Auth';
 import { CardsApi } from '../apis/CardsApi';
-import { BoardsCollection } from '../types';
 import { NotificationsStore } from './Notifications';
 import { CardsCollection } from '../types/Cards';
+import { BoardsStore } from './Boards';
 
 export class CardsStore {
   @observable private _list: CardsCollection = [];
