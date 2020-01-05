@@ -6,7 +6,6 @@ import { STORE_IDS } from "../../observableStores";
 import { CardsStore } from "../../observableStores/Cards";
 import { ListsStore } from "../../observableStores/Lists";
 import { Loader } from '../Loader';
-import { Card } from "../../types";
 import { List } from "./List";
 import { BoardsStore } from "../../observableStores/Boards";
 
@@ -32,10 +31,9 @@ export class Board extends React.Component<OwnProps> {
   renderLists() {
     const lists = this.props[STORE_IDS.LISTS]!.entities;
     const el = [];
-    console.log('TEST');
+
     for (let [id, list] of lists) {
       const cards = this.props[STORE_IDS.CARDS]!.entities.get(id) || [];
-      console.log(list);
       el.push(<div className={styles.list}><List {...list} cards={cards} /></div>);
     }
     return el;
@@ -56,7 +54,6 @@ export class Board extends React.Component<OwnProps> {
     if (!board) {
       return this.renderLoader();
     }
-    console.log(board);
     const boardStyle = {
       background: board.prefs.background,
       backgroundImage: board.prefs.backgroundImage,

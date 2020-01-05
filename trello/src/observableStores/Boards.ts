@@ -26,16 +26,15 @@ export class BoardsStore {
     return this._loadingPhase === LOADING_STATUS.PENDING;
   }
 
-  public getBoard(id: string) {
-    debugger;
-    return this._entities.get(id);
-  }
+  public getBoard = (id: string) => this._entities.get(id);
 
   public async fetchBoard(id: string) {
+    this._loadingPhase = LOADING_STATUS.PENDING;
     try {
       const { token } = this._auth;
       const board = await this._api.fetchOne(token, id);
       this._entities.set(board.id, board);
+      this._loadingPhase = LOADING_STATUS.SUCCESS;
     } catch (e) {
       this._notifications.show('Something went wrong!');
       this._loadingPhase = LOADING_STATUS.ERROR;
