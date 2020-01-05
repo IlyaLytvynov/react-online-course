@@ -26,6 +26,7 @@ export const routes: Array<AppRoute> = [
   {
     path: ROUTES_URLS.LOGIN,
     render: (props: any) => <Login {...props} />,
+    isHidden: true,
     title: 'Login'
   },
   {

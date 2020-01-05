@@ -1,0 +1,25 @@
+@import '../../styles/_variables';
+@import '../../styles/mixins';
+
+.loader {
+  @include loaderAbsolute;
+}
+
+.container {
+  @include content;
+}
+
+.content {
+  padding: $spacing;
+  display: flex;
+  align-items: center;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.item {
+  flex: 0 1 25%;
+  min-width: 150px;
+  padding: $spacing;
+}

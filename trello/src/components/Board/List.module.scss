@@ -1,0 +1,18 @@
+@import '../../styles/_variables';
+@import '../../styles/mixins';
+
+.container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: $spacing;
+  width: 100%;
+}
+
+.name {
+  text-align: center;
+  margin-bottom: $spacing;
+}
+
+.card {
+  padding: 5px 0;
+}
