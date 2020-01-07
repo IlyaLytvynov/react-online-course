@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "lib/",
+    "skipLibCheck": true,
+    "jsx": "react"
+  },
+  "include": ["src/server"],
+  "exclude": ["node_modules", "src/clientApp/*", "src/shared/*"]
+}

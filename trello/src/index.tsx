@@ -14,11 +14,6 @@ const history = createBrowserHistory();
 const store = configureStore(history);
 store.dispatch(init());
 
-// const mobxStore = new MyCoolStore();
-// // @ts-ignore
-// window.t = mobxStore;
-// setInterval(() => mobxStore.increase(), 1000);
-
 ReactDOM.render(
   <ReduxProvider store={store}>
     <ConnectedRouter history={history}>
