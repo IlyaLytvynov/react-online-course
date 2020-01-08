@@ -1,4 +1,4 @@
-import { observable, computed, toJS } from 'mobx';
+import { observable, computed, toJS, action, reaction, autorun } from 'mobx';
 import { AuthStore } from './Auth';
 import { makeUrl } from '../utils/makeUrl';
 import { BoardsApi } from '../apis/BoardsApi';
@@ -14,7 +14,11 @@ export class BoardsStore {
     private _auth: AuthStore,
     private _api: BoardsApi,
     private _notifications: NotificationsStore
-  ) {}
+  ) {
+    autorun(() => {
+      console.log('CHANGED!', this._entities);
+    });
+  }
 
   @computed
   public get entities() {
@@ -41,6 +45,7 @@ export class BoardsStore {
     }
   }
 
+  @action
   public async fetchBoards() {
     this._loadingPhase = LOADING_STATUS.PENDING;
     try {

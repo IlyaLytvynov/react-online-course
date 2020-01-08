@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteChildrenProps } from 'react-router';
+import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { STORE_IDS } from '../../observableStores';
 import { BoardsStore } from '../../observableStores/Boards';
@@ -28,11 +29,14 @@ class Dashboard extends React.Component<DashboardProps> {
   }
 
   renderBoards() {
-    return Array.from(this.store!.entities.values()).map((item: any) => {
-      return <div className={styles.item}>
-        <Board {...item} />
-      </div>;
-    });
+    console.log(toJS(this.store!.entities));
+    const els = [];
+    for (let [_, value] of this.store!.entities) {
+      els.push(<div className={styles.item}>
+        <Board {...value} />
+      </div>);
+    }
+    return els;
   }
 
   renderLoader() {

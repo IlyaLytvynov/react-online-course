@@ -10,7 +10,7 @@ import { inject, observer } from 'mobx-react';
 import { STORE_IDS } from '../../observableStores';
 import { UiStore } from '../../observableStores/UiStire';
 import { Notifications } from '../Notifications';
-
+import { HelloWorldContext } from '../../contexts/HelloWorldContext';
 
 
 interface AppState {
@@ -23,7 +23,8 @@ interface AppProps {
 const INITIAL_STATE = {
   token: '',
   userProfile: undefined,
-  boards: []
+  boards: [],
+  title: 'TEst'
 };
 
 @inject(STORE_IDS.UI)
@@ -57,11 +58,20 @@ class App extends React.Component<AppProps, AppState> {
     }
   };
 
+  changeTitle = (title: string) => {
+    this.setState((state) => {
+      return { ...state, title };
+    });
+  };
+
   public render() {
+    const { title } = this.state;
     return <div className={styles.content}>
-      <Header />
-      <Notifications />
-      {this.renderContent()}
+      <HelloWorldContext.Provider value={{ title, changeTitle: this.changeTitle }}>
+        <Header />
+        <Notifications />
+        {this.renderContent()}
+      </HelloWorldContext.Provider>
     </div>;
   }
 }

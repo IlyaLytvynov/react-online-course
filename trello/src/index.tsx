@@ -9,7 +9,8 @@ import './index.scss';
 import configureStore from './store';
 import { init } from './store/initialization';
 import { stores } from './observableStores';
-
+import { HelloWorldContext } from './contexts/HelloWorldContext';
+console.log(HelloWorldContext);
 const history = createBrowserHistory();
 const store = configureStore(history);
 store.dispatch(init());
