@@ -7,13 +7,11 @@ interface DashboardProps extends RouteChildrenProps {
 }
 
 export class Dashboard extends React.Component<DashboardProps> {
-
   goBack = () => {
     this.props.history.goBack();
-  }
+  };
 
   render() {
-    console.log(this.props);
-    return <h2 onClick={this.goBack}>Hello from dashboard</h2>
+    return <h2 onClick={this.goBack}>Hello from dashboard</h2>;
   }
 }
