@@ -8,7 +8,7 @@ import { setBoards } from './actions';
 const fetchBoardsWorker: any = ({
   action,
   next,
-  dispatch
+  dispatch,
 }: {
   action: any;
   next: any;
@@ -20,18 +20,46 @@ const fetchBoardsWorker: any = ({
     request({
       path: '/1/members/me/boards',
       authRequired: true,
-      onSuccess: data => {
+      onSuccess: (data) => {
         console.log(data);
         dispatch(setBoards(data));
       },
-      onError: error => {
+      onError: (error) => {
         console.log(error);
-      }
+      },
     })
   );
 };
 
-const fetchMiddleware = ({ dispatch }: any) => (next: any) =>
-  subscribe(ACTION_TYPES.FETCH, fetchBoardsWorker)(next, dispatch);
+const updateBoardsWorker: any = ({
+  action,
+  next,
+  dispatch,
+}: {
+  action: any;
+  next: any;
+  dispatch: any;
+}) => {
+  console.log('FETCHED');
+
+  dispatch(
+    request({
+      path: '/1/members/me/boards',
+      authRequired: true,
+      onSuccess: (data) => {
+        console.log(data);
+        dispatch(setBoards(data));
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    })
+  );
+};
+
+const fetchMiddleware =
+  ({ dispatch }: any) =>
+  (next: any) =>
+    subscribe(ACTION_TYPES.FETCH, fetchBoardsWorker)(next, dispatch);
 
 export const boardsMiddleware = [fetchMiddleware];

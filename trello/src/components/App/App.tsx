@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Route, RouteComponentProps, Redirect, Switch, RouteChildrenProps, withRouter } from 'react-router-dom';
+import {
+  Route,
+  RouteComponentProps,
+  Redirect,
+  Switch,
+  RouteChildrenProps,
+  withRouter,
+} from 'react-router-dom';
 import { setToLocalStorage, getFromLocalStorage } from '../../utils';
 import { routes, AppRoute, ROUTES_URLS } from './routes';
 import { OAuth } from '../OAuth';
@@ -26,47 +33,60 @@ interface AppState {
   userProfile: any;
 }
 
-interface AppProps { }
+interface AppProps {}
 
 const INITIAL_STATE = {
   token: '',
   userProfile: undefined,
-  boards: []
+  boards: [],
 };
 
 class App extends React.Component<AppProps, AppState> {
   public state = INITIAL_STATE;
 
   private renderContent() {
-    return <main className={styles.content}>
-      <Switch>
-        {routes.map(this.renderRoute)}
-        <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} />} />
-      </Switch>
-    </main>;
+    return (
+      <main className={styles.content}>
+        <Switch>
+          {routes.map(this.renderRoute)}
+          <Route
+            path={ROUTES_URLS.OAUTH}
+            render={(props: RouteChildrenProps) => <OAuth {...props} />}
+          />
+        </Switch>
+      </main>
+    );
   }
 
   private renderRoute = (route: AppRoute, i: number) => {
     if (route.isProtected) {
-      return <ProtectedRoute
-        exact={route.exact}
-        key={i}
-        path={route.path}
-        render={route.render} />;
+      return (
+        <ProtectedRoute
+          exact={route.exact}
+          key={i}
+          path={route.path}
+          render={route.render}
+        />
+      );
     } else {
-      return <Route
-        exact={route.exact}
-        key={i}
-        path={route.path}
-        render={(props) => route.render({ ...props })} />;
+      return (
+        <Route
+          exact={route.exact}
+          key={i}
+          path={route.path}
+          render={(props) => route.render({ ...props })}
+        />
+      );
     }
   };
 
   public render() {
-    return <div>
-      <Header onLogOut={() => console.log('asdas')} />
-      {this.renderContent()}
-    </div>;
+    return (
+      <div>
+        <Header onLogOut={() => console.log('asdas')} />
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 

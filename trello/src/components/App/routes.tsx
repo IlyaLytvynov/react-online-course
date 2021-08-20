@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect, RouteChildrenProps } from 'react-router-dom';
-import { Login } from "../Login";
-import { Dashboard } from "../Dashboard";
+import { Login } from '../Login';
+import { Dashboard } from '../Dashboard';
 import { NotFound } from '../NotFound';
 
 export enum ROUTES_URLS {
@@ -9,15 +9,15 @@ export enum ROUTES_URLS {
   LOGIN = '/signin',
   DASHBOARD = '/dashboard',
   OAUTH = '/oauth',
-  NOT_FOUND = '/404'
+  NOT_FOUND = '/404',
 }
 
 export interface AppRoute {
-  path: ROUTES_URLS,
-  render: (props: any) => any,
-  title?: string,
-  isHidden?: boolean,
-  exact?: boolean,
+  path: ROUTES_URLS;
+  render: (props: any) => any;
+  title?: string;
+  isHidden?: boolean;
+  exact?: boolean;
   isProtected?: boolean;
 }
 
@@ -25,7 +25,7 @@ export const routes: Array<AppRoute> = [
   {
     path: ROUTES_URLS.LOGIN,
     render: (props: any) => <Login {...props} />,
-    title: 'Login'
+    title: 'Login',
   },
   {
     path: ROUTES_URLS.DASHBOARD,
@@ -37,7 +37,7 @@ export const routes: Array<AppRoute> = [
     path: ROUTES_URLS.HOME,
     isHidden: true,
     exact: true,
-    render: () => <Redirect to={ROUTES_URLS.LOGIN} />,
+    render: () => <Redirect to={ROUTES_URLS.DASHBOARD} />,
   },
   {
     path: ROUTES_URLS.NOT_FOUND,
