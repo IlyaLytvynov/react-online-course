@@ -8,7 +8,7 @@ interface BoardsState {
 
 const INITIAL_STATE = {
   list: [],
-  selected: ''
+  selected: '',
 };
 
 export default (
@@ -18,6 +18,8 @@ export default (
   switch (type) {
     case ACTION_TYPES.SET_BOARDS:
       return { ...state, list: payload };
+    case ACTION_TYPES.SET_SINGLE_BOARD:
+      return { ...state, list: [...state.list, payload] };
     default:
       return state;
   }

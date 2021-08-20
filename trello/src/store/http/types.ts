@@ -1,8 +1,11 @@
 import { Action } from '../types';
 
-export interface RequestPayload<P = any> {
+export interface RequestPayload<P = any, B = any> {
   path: string;
+  body?: B;
   authRequired?: boolean;
+  method?: 'PUT' | 'GET' | 'POST' | 'DELETE';
+  additionalQueryParams?: string;
   onSuccess?: (p?: P) => void;
   onError?: (e?: any) => void;
 }
@@ -10,7 +13,7 @@ export interface RequestPayload<P = any> {
 export enum ACTION_TYPES {
   REQUEST = '@@HTTP/REQUEST',
   SUCCESS = '@@HTTP/SUCCESS',
-  ERROR = '@@HTTP/ERROR'
+  ERROR = '@@HTTP/ERROR',
 }
 
 export interface ActionHttp<P = any>
